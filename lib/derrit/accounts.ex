@@ -84,8 +84,12 @@ defmodule Derrit.Accounts do
   """
   def register_user_and_author(attrs) do
     Repo.transaction fn ->
-      {:ok, user} = register_user(attrs)
-      Derrit.CMS.create_author(Map.put(attrs, :user_id, user.id))
+      with {:ok, user} <- register_user(attrs),
+           {:ok, _} <- Derrit.CMS.create_author(Map.put(attrs, "user_id", user.id)) do
+        user
+      else
+        {:error, e} -> Repo.rollback(e)
+      end
     end
   end
 

@@ -7,6 +7,10 @@
     </div>
   <% end %>
 
+  <%= label f, :name %>
+  <%= text_input f, :name, required: true %>
+  <%= error_tag f, :name %>
+
   <%= label f, :email %>
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
@@ -14,6 +18,9 @@
   <%= label f, :password %>
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
+
+  <%= label f, :bio %>
+  <%= textarea f, :bio %>
 
   <div>
     <%= submit "Register" %>
