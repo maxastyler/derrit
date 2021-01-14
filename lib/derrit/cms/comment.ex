@@ -4,8 +4,8 @@ defmodule Derrit.CMS.Comment do
 
   schema "comments" do
     field :text, :string
-    field :author_id, :id
-    field :post_id, :id
+    belongs_to :author, Derrit.CMS.Author
+    belongs_to :post, Derrit.CMS.Post
 
     timestamps()
   end
@@ -13,7 +13,9 @@ defmodule Derrit.CMS.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:text])
-    |> validate_required([:text])
+    |> cast(attrs, [:text, :author_id, :post_id])
+    |> validate_required([:text, :author_id, :post_id])
+    |> assoc_constraint(:post)
+    |> assoc_constraint(:author)
   end
 end
