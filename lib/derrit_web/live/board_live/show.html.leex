@@ -1,0 +1,12 @@
+<h1><%= @board.name %></h1>
+<h3><%= @board.description %></h3>
+<span><%= live_patch "New Post", to: Routes.board_show_path(@socket, :new, @board) %></span>
+
+<%= if @live_action == :new do %>
+    <%= live_modal @socket, DerritWeb.BoardLive.NewPostComponent,
+    id: @post.id || :new,
+    title: @page_title,
+    action: @live_action,
+    post: @post,
+    return_to: Routes.board_show_path(@socket, :show, @board) %>
+<% end %>

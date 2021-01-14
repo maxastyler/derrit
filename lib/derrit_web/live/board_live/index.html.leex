@@ -1,6 +1,15 @@
 <h1>These are the available boards:</h1>
 
+<%= if @live_action == :new do %>
+    <%= live_modal @socket, DerritWeb.BoardLive.FormComponent,
+    id: @board.id || :new,
+    title: @page_title,
+    action: @live_action,
+    board: @board,
+    return_to: Routes.board_index_path(@socket, :index) %>
+<% end %>
 
+<span><%= live_patch "New Board", to: Routes.board_index_path(@socket, :new) %></span>
 <table>
     <thead>
         <tr>
@@ -11,7 +20,7 @@
     <tbody id="boards">
         <%= for board <- @boards do %>
             <tr id="board-<%= board.id %>">
-                <td><%= board.name %></td>
+                <td><%= live_redirect board.name, to: Routes.board_show_path(@socket, :show, board) %></td>
                 <td><%= board.description %></td>
             </tr>
         <% end %>

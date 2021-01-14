@@ -21,6 +21,9 @@ defmodule DerritWeb.Router do
     pipe_through :browser
 
     live "/", BoardLive.Index, :index
+    live "/new", BoardLive.Index, :new
+    live "/boards/:board_id", BoardLive.Show, :show
+    live "/boards/:board_id/new", BoardLive.Show, :new
   end
 
   # Other scopes may use custom stacks.
