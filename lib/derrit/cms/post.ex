@@ -14,7 +14,7 @@ defmodule Derrit.CMS.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :body])
-    |> validate_required([:title, :body])
+    |> cast(attrs, [:title, :body, :board_id, :author_id])
+    |> validate_required([:title, :board_id, :author_id])
   end
 end

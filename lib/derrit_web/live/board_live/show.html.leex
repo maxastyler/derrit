@@ -8,5 +8,13 @@
     title: @page_title,
     action: @live_action,
     post: @post,
+    user: @user,
+    board_id: @board.id,
     return_to: Routes.board_show_path(@socket, :show, @board) %>
 <% end %>
+
+<%= for post <- @board.posts do %>
+    <h3><%= post.title %></h3>
+    <div><%= post.body %></div>
+    <small><%= post.author.name %></small>
+<%= end %>

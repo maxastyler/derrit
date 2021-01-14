@@ -5,7 +5,6 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
   @impl true
   def update(%{post: post} = assigns, socket) do
     changeset = CMS.change_post(post)
-
     {:ok, socket |> assign(assigns) |> assign(:changeset, changeset)}
   end
 
@@ -20,7 +19,14 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
   end
 
   defp save_post(socket, :new, post_params) do
-    case CMS.create_post(post_params) do
+    IO.inspect(socket.assigns.user)
+
+    case CMS.create_post(
+           Map.merge(post_params, %{
+             "board_id" => socket.assigns.board_id,
+             "author_id" => socket.assigns.user.author.id
+           })
+         ) do
       {:ok, _post} ->
         {:noreply,
          socket
@@ -29,6 +35,6 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
-  end
+    end
   end
 end
