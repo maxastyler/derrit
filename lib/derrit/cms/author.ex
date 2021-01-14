@@ -6,6 +6,7 @@ defmodule Derrit.CMS.Author do
     field :bio, :string
     field :name, :string
     belongs_to :user, Derrit.Accounts.User
+    has_many :posts, Derrit.CMS.Post
 
     timestamps()
   end

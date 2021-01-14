@@ -5,6 +5,7 @@ defmodule Derrit.CMS.Board do
   schema "boards" do
     field :description, :string
     field :name, :string
+    has_many :posts, Derrit.CMS.Post
 
     timestamps()
   end

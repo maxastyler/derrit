@@ -5,7 +5,8 @@ defmodule Derrit.CMS.Post do
   schema "posts" do
     field :body, :string
     field :title, :string
-    field :board_id, :id
+    belongs_to :board, Derrit.CMS.Board
+    belongs_to :author, Derrit.CMS.Author
 
     timestamps()
   end
