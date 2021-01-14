@@ -20,7 +20,7 @@ defmodule DerritWeb.Router do
   scope "/", DerritWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", BoardLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

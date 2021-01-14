@@ -1,0 +1,19 @@
+<h1>These are the available boards:</h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody id="boards">
+        <%= for board <- @boards do %>
+            <tr id="board-<%= board.id %>">
+                <td><%= board.name %></td>
+                <td><%= board.description %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
