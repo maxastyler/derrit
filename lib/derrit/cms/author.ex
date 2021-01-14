@@ -5,7 +5,7 @@ defmodule Derrit.CMS.Author do
   schema "authors" do
     field :bio, :string
     field :name, :string
-    field :user_id, :id
+    belongs_to :user, Derrit.Accounts.User
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Derrit.CMS.Author do
   @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [:name, :bio])
-    |> validate_required([:name, :bio])
+    |> cast(attrs, [:name, :bio, :user_id])
+    |> validate_required([:name, :user_id])
   end
 end

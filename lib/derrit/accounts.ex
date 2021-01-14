@@ -80,6 +80,16 @@ defmodule Derrit.Accounts do
   end
 
   @doc """
+  Register a user and the accompanying author inside one transaction
+  """
+  def register_user_and_author(attrs) do
+    Repo.transaction fn ->
+      {:ok, user} = register_user(attrs)
+      Derrit.CMS.create_author(Map.put(attrs, :user_id, user.id))
+    end
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples
