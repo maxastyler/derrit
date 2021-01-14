@@ -24,6 +24,8 @@ defmodule DerritWeb.Router do
     live "/new", BoardLive.Index, :new
     live "/boards/:board_id", BoardLive.Show, :show
     live "/boards/:board_id/new", BoardLive.Show, :new
+    live "/posts/:post_id", PostLive.Show, :show
+    live "/authors/:author_id", AuthorLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

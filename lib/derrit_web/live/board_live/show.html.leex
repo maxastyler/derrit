@@ -14,7 +14,7 @@
 <% end %>
 
 <%= for post <- @board.posts do %>
-    <h3><%= post.title %></h3>
+    <h3><%= live_redirect post.title, to: Routes.post_show_path(@socket, :show, post) %></h3>
     <div><%= post.body %></div>
-    <small><%= post.author.name %></small>
+    <small><%= live_redirect post.author.name, to: Routes.author_show_path(@socket, :show, post.author) %></small>
 <%= end %>
