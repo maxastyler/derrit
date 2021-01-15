@@ -16,5 +16,6 @@ defmodule Derrit.CMS.Author do
     author
     |> cast(attrs, [:name, :bio, :user_id])
     |> validate_required([:name, :user_id])
+    |> assoc_constraint(:user)
   end
 end

@@ -25,6 +25,7 @@ defmodule DerritWeb.Router do
     live "/boards/:board_id", BoardLive.Show, :show
     live "/boards/:board_id/new", BoardLive.Show, :new
     live "/posts/:post_id", PostLive.Show, :show
+    live "/posts/:post_id/new", PostLive.Show, :new
     live "/authors/:author_id", AuthorLive.Show, :show
   end
 

@@ -1,6 +1,6 @@
 <h2>New Post</h2>
 
-<%= f = form_for @changeset, "#", id: "board-form", phx_target: @myself,
+<%= f = form_for @changeset, "#", id: "post-form", phx_target: @myself,
 phx_change: "validate", phx_submit: "save" %>
 
 <%= label f, :title %>

@@ -7,6 +7,7 @@ defmodule Derrit.CMS.Post do
     field :title, :string
     belongs_to :board, Derrit.CMS.Board
     belongs_to :author, Derrit.CMS.Author
+    has_many :comment, Derrit.CMS.Comment
 
     timestamps()
   end
@@ -16,5 +17,7 @@ defmodule Derrit.CMS.Post do
     post
     |> cast(attrs, [:title, :body, :board_id, :author_id])
     |> validate_required([:title, :board_id, :author_id])
+    |> assoc_constraint(:board)
+    |> assoc_constraint(:author)
   end
 end
