@@ -50,9 +50,11 @@ defmodule DerritWeb.LiveHelpers do
   @doc """
   Redirect the user to the login page, with an optional flash message.
   """
-  def redirect_to_login(socket, flash_message \\ "You need to log in.") do
+  def redirect_to_login(socket, redirect_path, flash_message \\ "You need to log in.") do
     socket
     |> Phoenix.LiveView.put_flash(:error, flash_message)
-    |> Phoenix.LiveView.redirect(to: DerritWeb.Router.Helpers.user_session_path(socket, :new))
+    |> Phoenix.LiveView.redirect(
+      to: DerritWeb.Router.Helpers.user_session_path(socket, :new, return_to: redirect_path)
+    )
   end
 end

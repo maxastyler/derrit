@@ -10,15 +10,17 @@ defmodule DerritWeb.PostLive.Show do
   end
 
   @impl true
-  def handle_params(%{"post_id" => post_id}, _, socket) do
-    post = CMS.get_post!(post_id) |> Derrit.Repo.preload([comment: [:author]])
-    {:noreply,
-     case socket.assigns.live_action do
-       :new ->
-         socket |> assign(page_title: "New comment", post: post, comment: %Comment{})
+  def handle_params(%{"post_id" => post_id}, uri, socket) do
+    post = CMS.get_post!(post_id) |> Derrit.Repo.preload(comment: [:author])
 
-       _ ->
-         socket |> assign(page_title: post.title, post: post, comment: nil)
-     end}
+    {:noreply,
+     socket
+     |> assign(post: post, uri: URI.parse(uri).path)
+     |> assign(
+       case socket.assigns.live_action do
+         :new -> [page_title: "New comment", comment: %Comment{}]
+         _ -> [page_title: post.title, comment: nil]
+       end
+     )}
   end
 end

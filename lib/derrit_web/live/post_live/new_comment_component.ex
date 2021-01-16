@@ -35,7 +35,12 @@ defmodule DerritWeb.PostLive.NewCommentComponent do
        |> push_redirect(to: socket.assigns.return_to)}
     else
       {:error, "no valid user in socket"} ->
-        {:noreply, redirect_to_login(socket, "You need to be signed in to post a comment.")}
+        {:noreply,
+         redirect_to_login(
+           socket,
+           socket.assigns.uri,
+           "You need to be signed in to post a comment."
+         )}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

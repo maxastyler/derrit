@@ -4,8 +4,9 @@ defmodule DerritWeb.UserSessionController do
   alias Derrit.Accounts
   alias DerritWeb.UserAuth
 
-  def new(conn, _params) do
-    render(conn, "new.html", error_message: nil)
+  def new(conn, params) do
+    put_session(conn, :user_return_to, params["return_to"])
+    |> render("new.html", error_message: nil)
   end
 
   def create(conn, %{"user" => user_params}) do
