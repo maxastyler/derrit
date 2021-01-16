@@ -19,19 +19,22 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
   end
 
   defp save_post(socket, :new, post_params) do
-    IO.inspect(socket.assigns.user)
-
-    case CMS.create_post(
-           Map.merge(post_params, %{
-             "board_id" => socket.assigns.board_id,
-             "author_id" => socket.assigns.user.author.id
-           })
-         ) do
-      {:ok, _post} ->
+    with {:ok, author} <- author_from_socket(socket),
+         {:ok, _post} <-
+           CMS.create_post(
+             Map.merge(post_params, %{
+               "board_id" => socket.assigns.board_id,
+               "author_id" => author.id
+             })
+           ) do
+      {:noreply,
+       socket
+       |> put_flash(:info, "Post created successfully")
+       |> push_redirect(to: socket.assigns.return_to)}
+    else
+      {:error, "no valid user in socket"} ->
         {:noreply,
-         socket
-         |> put_flash(:info, "Post created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         redirect_to_login(socket, "You need to log in to post.")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

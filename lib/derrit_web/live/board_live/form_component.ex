@@ -27,16 +27,18 @@ defmodule DerritWeb.BoardLive.FormComponent do
   end
 
   defp save_board(socket, :new, board_params) do
-    case CMS.create_board(board_params) do
-      {:ok, _board} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Board created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+    with {:ok, author} <- author_from_socket(socket),
+         {:ok, _board} <- CMS.create_board(board_params) do
+      {:noreply,
+       socket
+       |> put_flash(:info, "Board created successfully")
+       |> push_redirect(to: socket.assigns.return_to)}
+    else
+      {:error, "no valid user in socket"} ->
+        {:noreply, redirect_to_login(socket, "You need to log in to create a board.")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
-
 end

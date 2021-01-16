@@ -5,8 +5,8 @@ defmodule DerritWeb.BoardLive.Index do
   alias Derrit.CMS.Board
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, boards: Derrit.CMS.list_boards())}
+  def mount(_params, session, socket) do
+    {:ok, assign(socket, boards: Derrit.CMS.list_boards()) |> assign_user_token(session)}
   end
 
   @impl true
