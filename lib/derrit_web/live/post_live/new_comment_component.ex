@@ -21,17 +21,21 @@ defmodule DerritWeb.PostLive.NewCommentComponent do
   end
 
   defp save_comment(socket, :new, comment_params) do
-    case CMS.create_comment(
-           Map.merge(comment_params, %{
-             "post_id" => socket.assigns.post_id,
-             "author_id" => socket.assigns.user.author.id
-           })
-         ) do
-      {:ok, _comment} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Comment created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+    with {:ok, author} <- author_from_socket(socket),
+         {:ok, _comment} <-
+           CMS.create_comment(
+             Map.merge(comment_params, %{
+               "post_id" => socket.assigns.post_id,
+               "author_id" => author.id
+             })
+           ) do
+      {:noreply,
+       socket
+       |> put_flash(:info, "Comment created successfully")
+       |> push_redirect(to: socket.assigns.return_to)}
+    else
+      {:error, "no valid user in socket"} ->
+        {:noreply, redirect_to_login(socket, "You need to be signed in to post a comment.")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

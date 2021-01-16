@@ -6,16 +6,7 @@ defmodule DerritWeb.PostLive.Show do
 
   @impl true
   def mount(_param, session, socket) do
-    user =
-      case session["user_token"] do
-        nil ->
-          nil
-
-        token ->
-          Derrit.Accounts.get_user_by_session_token(token) |> Derrit.Repo.preload([:author])
-      end
-
-    {:ok, assign(socket, :user, user)}
+    {:ok, assign_user_token(socket, session)}
   end
 
   @impl true
