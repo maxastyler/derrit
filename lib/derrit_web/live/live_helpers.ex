@@ -36,8 +36,6 @@ defmodule DerritWeb.LiveHelpers do
   Otherwise, return an {:error, ...} tuple
   """
   def author_from_socket(socket) do
-    IO.inspect(socket.assigns.user_token)
-
     with token when token != nil <- socket.assigns.user_token,
          user when user != nil <- Derrit.Accounts.get_user_by_session_token(token),
          user <- Derrit.Repo.preload(user, :author) do
