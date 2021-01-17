@@ -30,6 +30,7 @@ defmodule DerritWeb.PostLive.NewCommentComponent do
              })
            ) do
       DerritWeb.Endpoint.broadcast("post:#{socket.assigns.post_id}", "comment_added", comment)
+
       {:noreply,
        socket
        |> put_flash(:info, "Comment created successfully")

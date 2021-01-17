@@ -6,8 +6,7 @@ defmodule DerritWeb.PostLive.Show do
 
   @impl true
   def mount(_param, session, socket) do
-    {:ok, assign_user_token(socket, session),
-     temporary_assigns: [comments: []]}
+    {:ok, assign_user_token(socket, session), temporary_assigns: [comments: []]}
   end
 
   @impl true
