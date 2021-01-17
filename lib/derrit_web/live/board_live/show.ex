@@ -10,8 +10,8 @@ defmodule DerritWeb.BoardLive.Show do
   end
 
   @impl true
-  def handle_params(%{"board_id" => board_id}, _, socket) do
-    board = CMS.get_board!(board_id) |> Derrit.Repo.preload([posts: [:author]])
+  def handle_params(%{"board_id" => board_id}, uri, socket) do
+    board = CMS.get_board!(board_id) |> Derrit.Repo.preload(posts: [:author])
 
     {:noreply,
      case socket.assigns.live_action do
@@ -20,6 +20,7 @@ defmodule DerritWeb.BoardLive.Show do
 
        _ ->
          socket |> assign(page_title: board.name, board: board, post: nil)
-     end}
+     end
+     |> assign(uri: URI.parse(uri).path)}
   end
 end

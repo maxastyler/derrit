@@ -35,7 +35,8 @@ defmodule DerritWeb.BoardLive.FormComponent do
        |> push_redirect(to: socket.assigns.return_to)}
     else
       {:error, "no valid user in socket"} ->
-        {:noreply, redirect_to_login(socket, "You need to log in to create a board.")}
+        {:noreply,
+         redirect_to_login(socket, socket.assigns.uri, "You need to log in to create a board.")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

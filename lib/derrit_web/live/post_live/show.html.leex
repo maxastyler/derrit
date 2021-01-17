@@ -16,7 +16,11 @@
 
 <span><%= live_patch "New Comment", to: Routes.post_show_path(@socket, :new, @post) %></span>
 
-<%= for comment <- @post.comment do %>
-    <div><%= comment.text %></div>
-    <small><%= comment.author.name %></small>
-<%= end %>
+<div id="post-comments" phx-update="append">
+    <%= for comment <- @comments do %>
+        <div id="comment-<%= comment.id %>">
+            <div><%= comment.text %></div>
+            <small><%= comment.author.name %></small>
+        </div>
+    <% end %>
+</div>

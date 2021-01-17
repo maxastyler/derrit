@@ -10,7 +10,7 @@ defmodule DerritWeb.BoardLive.Index do
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
+  def handle_params(_params, uri, socket) do
     {:noreply,
      if socket.assigns.live_action == :new do
        socket
@@ -20,6 +20,7 @@ defmodule DerritWeb.BoardLive.Index do
        socket
        |> assign(:page_title, "Listing Boards")
        |> assign(:board, nil)
-     end}
+     end
+     |> assign(:uri, URI.parse(uri).path)}
   end
 end

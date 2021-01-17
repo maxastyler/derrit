@@ -22,13 +22,14 @@ defmodule DerritWeb.PostLive.NewCommentComponent do
 
   defp save_comment(socket, :new, comment_params) do
     with {:ok, author} <- author_from_socket(socket),
-         {:ok, _comment} <-
+         {:ok, comment} <-
            CMS.create_comment(
              Map.merge(comment_params, %{
                "post_id" => socket.assigns.post_id,
                "author_id" => author.id
              })
            ) do
+      DerritWeb.Endpoint.broadcast("post:#{socket.assigns.post_id}", "comment_added", comment)
       {:noreply,
        socket
        |> put_flash(:info, "Comment created successfully")

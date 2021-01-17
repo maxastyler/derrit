@@ -34,7 +34,7 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
     else
       {:error, "no valid user in socket"} ->
         {:noreply,
-         redirect_to_login(socket, "You need to log in to post.")}
+         redirect_to_login(socket, socket.assigns.uri, "You need to log in to post.")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

@@ -326,6 +326,13 @@ defmodule Derrit.CMS do
   def get_comment!(id), do: Repo.get!(Comment, id)
 
   @doc """
+  Get all the comments for the given post
+  """
+  def get_comments_for_post(post) do
+    Repo.all(from c in Comment, where: c.post_id == ^post.id, preload: [:author])
+  end
+
+  @doc """
   Creates a comment.
 
   ## Examples
