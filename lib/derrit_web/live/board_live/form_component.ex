@@ -27,7 +27,7 @@ defmodule DerritWeb.BoardLive.FormComponent do
   end
 
   defp save_board(socket, :new, board_params) do
-    with {:ok, author} <- author_from_socket(socket),
+    with {:ok, _author} <- author_from_socket(socket),
          {:ok, _board} <- CMS.create_board(board_params) do
       {:noreply,
        socket
