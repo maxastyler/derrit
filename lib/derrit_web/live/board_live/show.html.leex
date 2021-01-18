@@ -1,6 +1,6 @@
 <h1><%= @board.name %></h1>
 <h3><%= @board.description %></h3>
-<span><%= live_patch "New Post", to: Routes.board_show_path(@socket, :new, @board) %></span>
+<span><%= live_patch "New Post", to: Routes.board_show_path(@socket, :new, @board.name), class: "button"%></span>
 
 <%= if @live_action == :new do %>
     <%= live_modal @socket, DerritWeb.BoardLive.NewPostComponent,
@@ -9,13 +9,15 @@
     action: @live_action,
     post: @post,
     user_token: @user_token,
-    board_id: @board.id,
+    board: @board,
     uri: @uri,
-    return_to: Routes.board_show_path(@socket, :show, @board) %>
+    return_to: Routes.board_show_path(@socket, :show, @board.name) %>
 <% end %>
 
 <%= for post <- @board.posts do %>
+    <section class="container" id="post:<%= post.id %>">
     <h3><%= live_redirect post.title, to: Routes.post_show_path(@socket, :show, post) %></h3>
     <div><%= post.body %></div>
     <small><%= live_redirect post.author.name, to: Routes.author_show_path(@socket, :show, post.author) %></small>
+    </section>
 <%= end %>

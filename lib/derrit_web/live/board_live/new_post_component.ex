@@ -23,7 +23,7 @@ defmodule DerritWeb.BoardLive.NewPostComponent do
          {:ok, _post} <-
            CMS.create_post(
              Map.merge(post_params, %{
-               "board_id" => socket.assigns.board_id,
+               "board_id" => socket.assigns.board.id,
                "author_id" => author.id
              })
            ) do

@@ -11,7 +11,7 @@ defmodule DerritWeb.PostLive.Show do
 
   @impl true
   def handle_params(%{"post_id" => post_id}, uri, socket) do
-    post = CMS.get_post!(post_id)
+    post = CMS.get_post!(post_id) |> Derrit.Repo.preload([:board])
     comments = CMS.get_comments_for_post(post)
 
     if connected?(socket) do

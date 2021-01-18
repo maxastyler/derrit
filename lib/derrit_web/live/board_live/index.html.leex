@@ -22,7 +22,7 @@
     <tbody id="boards">
         <%= for board <- @boards do %>
             <tr id="board-<%= board.id %>">
-                <td><%= live_redirect board.name, to: Routes.board_show_path(@socket, :show, board) %></td>
+                <td><%= live_redirect board.name, to: Routes.board_show_path(@socket, :show, board.name) %></td>
                 <td><%= board.description %></td>
             </tr>
         <% end %>

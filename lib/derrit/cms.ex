@@ -134,6 +134,11 @@ defmodule Derrit.CMS do
   def get_board!(id), do: Repo.get!(Board, id)
 
   @doc """
+  Get the board by its name
+  """
+  def get_board_by_name!(name), do: Repo.get_by(Board, name: name)
+
+  @doc """
   Creates a board.
 
   ## Examples

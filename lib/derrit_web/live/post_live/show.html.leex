@@ -9,7 +9,8 @@
     uri: @uri,
     return_to: Routes.post_show_path(@socket, :show, @post) %>
 <% end %>
-
+<%= live_redirect "Boards Index", to: Routes.board_index_path(@socket, :index), class: "button"%>
+<%= live_redirect "Back to board", to: Routes.board_show_path(@socket, :show, @post.board.name), class: "button"%>
 <h1><%= @post.title %></h1>
 <h3><%= @post.body %></h3>
 
