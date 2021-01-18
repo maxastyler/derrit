@@ -18,7 +18,7 @@
 
 <div id="post-comments" phx-update="append">
     <%= for comment <- @comments do %>
-        <div id="comment-<%= comment.id %>" class="post">
+        <div id="comment-<%= comment.id %>">
             <div class="row">
                 <div><%= comment.text %></div>
             </div>
