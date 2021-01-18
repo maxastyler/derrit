@@ -18,9 +18,13 @@
 
 <div id="post-comments" phx-update="append">
     <%= for comment <- @comments do %>
-        <div id="comment-<%= comment.id %>">
-            <div><%= comment.text %></div>
-            <small><%= comment.author.name %></small>
+        <div id="comment-<%= comment.id %>" class="post">
+            <div class="row">
+                <div><%= comment.text %></div>
+            </div>
+            <div class="row">
+            <small><%= live_redirect comment.author.name, to: Routes.author_show_path(@socket, :show, comment.author) %></small>
+            </div>
         </div>
     <% end %>
 </div>
