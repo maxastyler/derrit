@@ -1,5 +1,15 @@
 # Derrit
 
+## A Reddit clone written in elixir.
+
+![A view of the boards page from a logged in user](/screenshots/boards_view.png)
+
+Features:
+- An accounts system!
+- Boards to organise your posts!
+- Comments on those posts!
+- Comments updated _LIVE_ as others post them!
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
